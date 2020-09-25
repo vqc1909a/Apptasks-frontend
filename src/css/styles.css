@@ -1,0 +1,23 @@
+.header { min-height: 10vh; }
+
+.footer { min-height: 10vh; }
+
+.signin-form, .signup-form { min-height: 80vh; }
+
+.sidebar { min-height: 100vh; }
+
+.addproyect-enter, .proyecto-enter { -webkit-transform: translateX(-100%); -ms-transform: translateX(-100%); transform: translateX(-100%); }
+
+.addproyect-enter-active, .proyecto-enter-active { -webkit-transform: translateX(0%); -ms-transform: translateX(0%); transform: translateX(0%); -webkit-transition: -webkit-transform 500ms; transition: -webkit-transform 500ms; -o-transition: transform 500ms; transition: transform 500ms; transition: transform 500ms, -webkit-transform 500ms; }
+
+.addproyect-exit, .proyecto-exit { -webkit-transform: translateX(0%); -ms-transform: translateX(0%); transform: translateX(0%); }
+
+.addproyect-exit-active, .proyecto-exit-active { -webkit-transform: translateX(-100%); -ms-transform: translateX(-100%); transform: translateX(-100%); -webkit-transition: -webkit-transform 500ms; transition: -webkit-transform 500ms; -o-transition: transform 500ms; transition: transform 500ms; transition: transform 500ms, -webkit-transform 500ms; }
+
+.tarea-enter { -webkit-transform: translateX(100%); -ms-transform: translateX(100%); transform: translateX(100%); }
+
+.tarea-enter-active { -webkit-transform: translateX(0%); -ms-transform: translateX(0%); transform: translateX(0%); -webkit-transition: -webkit-transform 500ms; transition: -webkit-transform 500ms; -o-transition: transform 500ms; transition: transform 500ms; transition: transform 500ms, -webkit-transform 500ms; }
+
+.tarea-exit { -webkit-transform: translateX(0%); -ms-transform: translateX(0%); transform: translateX(0%); }
+
+.tarea-exit-active { -webkit-transform: translateX(100%); -ms-transform: translateX(100%); transform: translateX(100%); -webkit-transition: -webkit-transform 500ms; transition: -webkit-transform 500ms; -o-transition: transform 500ms; transition: transform 500ms; transition: transform 500ms, -webkit-transform 500ms; }

@@ -1,0 +1,45 @@
+.header{
+     min-height: 10vh;
+}
+.footer{
+     min-height: 10vh;
+}
+.signin-form, .signup-form{
+     min-height: 80vh;
+}
+.sidebar{
+     min-height: 100vh;
+}
+
+.addproyect-enter, .proyecto-enter {
+  transform: translateX(-100%);
+}
+.addproyect-enter-active, .proyecto-enter-active{
+  transform: translateX(0%);
+  transition: transform 500ms;
+}
+.addproyect-exit, .proyecto-exit{
+  transform: translateX(0%);
+}
+.addproyect-exit-active, .proyecto-exit-active {
+  transform: translateX(-100%);
+  transition: transform 500ms;
+}
+
+.tarea-enter{
+  transform: translateX(100%);
+}
+.tarea-enter-active{
+  transform: translateX(0%);
+  transition: transform 500ms;
+}
+.tarea-exit{
+  transform: translateX(0%);
+}
+.tarea-exit-active{
+  transform: translateX(100%);
+  transition: transform 500ms;
+}
+// body{
+//      background: linear-gradient(to right, #360033, #0b8793);
+// }
