@@ -10,7 +10,6 @@
 .sidebar{
      min-height: 100vh;
 }
-
 .addproyect-enter, .proyecto-enter {
   transform: translateX(-100%);
 }
@@ -40,6 +39,5 @@
   transform: translateX(100%);
   transition: transform 500ms;
 }
-// body{
-//      background: linear-gradient(to right, #360033, #0b8793);
-// }
+
+

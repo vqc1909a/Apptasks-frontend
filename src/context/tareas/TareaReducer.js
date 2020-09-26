@@ -1,10 +1,17 @@
-import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA} from '../../types';
+import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR} from '../../types';
 export default (state, action) => {
      switch(action.type){
+          case OBTENER_TODAS_TAREAS:
+               return {
+                    ...state,
+                    tareas: action.payload,
+                    error: ''
+               }
           case OBTENER_TAREAS:
                return {
                     ...state,
-                    tareasproyecto: action.payload
+                    tareasproyecto: action.payload,
+                    error: ''
                }
           case AGREGAR_TAREA:
                return {
@@ -14,12 +21,14 @@ export default (state, action) => {
           case ELIMINAR_TAREA:
                return {
                     ...state,
-                    tareas: action.payload
+                    tareas: action.payload,
+                    error: ''
                }
           case CAMBIAR_ESTADO: 
                return {
                     ...state,
-                    tareas: action.payload
+                    tareas: action.payload,
+                    error: ''
                }
           case OBTENER_TAREA_EDITAR:
                return {
@@ -32,6 +41,11 @@ export default (state, action) => {
                     tareas: action.payload,
                     tareaedit: {}
                }
+           case OBTENER_ERROR:
+                return {
+                     ...state,
+                     error: action.payload
+                }
           default:
                return state;
      }

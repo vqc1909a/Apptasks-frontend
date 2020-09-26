@@ -1,0 +1,12 @@
+.error-general {
+     background: linear-gradient(to right, #f00000, #dc281e);
+     padding: 1rem 2rem;
+     color: white;
+     border-radius: 20px;
+     position: absolute;
+     z-index: 1;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+    
+}

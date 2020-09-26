@@ -1,15 +1,17 @@
-import {AGREGAR_PROYECTO, OBTENER_PROYECTOS, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO} from '../../types';
+import {AGREGAR_PROYECTO, OBTENER_PROYECTOS, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR} from '../../types';
 export default (state, action) => {
      switch(action.type){
           case OBTENER_PROYECTOS:
                return {
                     ...state,
-                    proyectos: action.payload
+                    proyectos: action.payload,
+                    error: ''
                }
           case AGREGAR_PROYECTO:
                return {
                     ...state,
-                    proyectos: action.payload
+                    proyectos: action.payload,
+                    error: ''
                }
           case SELECCIONAR_PROYECTO:
                return {
@@ -20,7 +22,13 @@ export default (state, action) => {
                return {
                     ...state,
                     proyectos: action.payload,
-                    proyecto: {}
+                    proyecto: {},
+                    error: ''
+               }
+          case OBTENER_ERROR:
+               return {
+                    ...state,
+                    error: action.payload
                }
           default:
                return state;

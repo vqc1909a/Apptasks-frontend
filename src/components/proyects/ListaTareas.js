@@ -8,9 +8,12 @@ import TareaContext from '../../context/tareas/TareaContext';
 const ListaTareas = () => {
      const {proyecto, eliminarProyecto} = useContext(ProyectoContext);
      const {name, _id} = proyecto;
-     const {tareasproyecto, obtenerTareas, tareas} = useContext(TareaContext);
+     const {tareasproyecto, obtenerTareas, tareas, obtenerTodasTareas} = useContext(TareaContext);
 
-
+     useEffect(()=>{
+          obtenerTodasTareas();
+          // eslint-disable-next-line
+     },[])
      useEffect(() => {
           obtenerTareas(_id);
           // eslint-disable-next-line

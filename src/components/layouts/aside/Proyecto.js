@@ -9,7 +9,7 @@ const Proyecto = ({proyecto}) => {
     
 
      return (
-          <li className="list-group-item bg-transparent text-white d-flex justify-content-between align-items-center" style={{cursor: 'pointer'}} onClick={() => seleccionarProyecto(_id)} >{name}
+          <li className="list-group-item bg-transparent border-white text-white d-flex justify-content-between align-items-center" style={{cursor: 'pointer'}} onClick={() => seleccionarProyecto(_id)} >{name}
          </li> 
      );   
 }

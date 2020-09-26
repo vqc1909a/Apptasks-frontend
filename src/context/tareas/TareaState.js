@@ -1,27 +1,36 @@
 import React, {useReducer} from 'react';
 import TareaContext from './TareaContext';
 import TareaReducer from './TareaReducer';
-import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA} from  '../../types';
-import uuid from 'uuid';
+import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR} from  '../../types';
+import axios from 'axios';
 const TareaState = (props) => {
 
+
      const initialState = {
-          tareas: [ {name: 'Tarea 1 Proyecto 1' , estado: true, _id: "1", proyectoid: "1"},
-               {name: 'Tarea 2 Proyecto 1' , estado: false, _id: "2", proyectoid: "1"},
-               {name: 'Tarea 3 Proyecto 1' , estado: false, _id: "3", proyectoid: "1"},
-               {name: 'Tarea 4 Proyecto 1' , estado: true, _id: "4", proyectoid: "1"},
-               {name: 'Tarea 1 Proyecto 2' , estado: true, _id: "5", proyectoid: "2"},
-               {name: 'Tarea 2 Proyecto 2' , estado: false, _id: "6", proyectoid: "2"},
-               {name: 'Tarea 3 Proyecto 2' , estado: false, _id: "7", proyectoid: "2"},
-               {name: 'Tarea 1 Proyecto 3' , estado: true, _id: "8", proyectoid: "3"},
-               {name: 'Tarea 2 Proyecto 3' , estado: true, _id: "9", proyectoid: "3"}
-          ],
+          tareas: [],
           tareasproyecto: [],
-          tareaedit: {}
+          tareaedit: {},
+          error: ''
      }
      
      const [state, dispatch] = useReducer(TareaReducer, initialState);
 
+     const obtenerTodasTareas = async () => {
+          try{
+               const {data} = await axios.get(process.env.REACT_APP_BACKEND_URL + '/tareas');
+               dispatch({
+                    type: OBTENER_TODAS_TAREAS,
+                    payload: data.body
+               })
+          }catch(err){
+               const {data} = err.response;
+               dispatch({
+                    type: OBTENER_ERROR,
+                    payload: data.message
+               })
+          }
+     }
+     
      const obtenerTareas = (id) => {
           const tareasproyecto = state.tareas.filter(tarea => tarea.proyectoid === id);
 
@@ -31,48 +40,90 @@ const TareaState = (props) => {
           })
      }
 
-     const agregarTarea = (tarea) => {
-          tarea._id = uuid.v4();
-          const newtareas = [tarea, ...state.tareas];
-          dispatch({
-               type: AGREGAR_TAREA,
-               payload: newtareas
-          })
+     const agregarTarea = async (tarea) => {
+          try{
+               const {data} = await axios.post(process.env.REACT_APP_BACKEND_URL + '/tareas', tarea);
+               const newtareas = [data.body, ...state.tareas];
+               dispatch({
+                    type: AGREGAR_TAREA,
+                    payload: newtareas
+               })
+          }catch(err){
+               const {data} = err.response;
+               dispatch({
+                    type: OBTENER_ERROR,
+                    payload: data.message
+               })
+          }
      }
 
-     const eliminarTarea = (id) => {
-          const resttareas = state.tareas.filter(tarea => tarea._id !== id);
-          dispatch({
-               type: ELIMINAR_TAREA,
-               payload: resttareas
-          })
+     const eliminarTarea = async (id) => {
+          try{
+               const {data} = await axios.delete(process.env.REACT_APP_BACKEND_URL + `/tareas/${id}`);
+               console.log(data.message);
+               const resttareas = state.tareas.filter(tarea => tarea._id !== id);
+               dispatch({
+                    type: ELIMINAR_TAREA,
+                    payload: resttareas
+               })
+          }catch(err){
+               const {data} = err.response;
+               dispatch({
+                    type: OBTENER_ERROR,
+                    payload: data.message
+               })
+          }
+
+      
      }
 
-     const cambiarEstado = (id) => {
-          const newtareas = state.tareas.map(tarea => {
-               if(tarea._id === id){
-                    tarea.estado = !tarea.estado
-               }
-               return tarea
-          })
-          dispatch({
-               type: CAMBIAR_ESTADO,
-               payload: newtareas
-          })
+     const cambiarEstado = async (id) => {
+          try{
+               const tarea = state.tareas.find(tarea => tarea._id === id);
+               const {data} = await axios.put(process.env.REACT_APP_BACKEND_URL + `/tareas/${id}`, {estado: !tarea.estado});
+               console.log(data.message);
+               
+               const newtareas = state.tareas.map(tarea => {
+                    if(tarea._id === id){
+                         tarea.estado = !tarea.estado
+                    }
+                    return tarea
+               })
+               dispatch({
+                    type: CAMBIAR_ESTADO,
+                    payload: newtareas
+               })
+          }catch(err){
+               const {data} = err.response;
+               dispatch({
+                    type: OBTENER_ERROR,
+                    payload: data.message
+               })
+          }
      }
 
-     const editarTarea = (tarea) => {
+     const editarTarea = async (tarea) => {
+          try{
+               const {data} = await axios.put(process.env.REACT_APP_BACKEND_URL + `/tareas/${tarea._id}`, {name: tarea.name});
+               console.log(data.message);
+               const newtareas = state.tareas.map(tar => {
+                    if(tar._id === tarea._id){
+                         tar = tarea;
+                    }
+                    return tar;
+               })
+               dispatch({
+                    type: EDITAR_TAREA,
+                    payload: newtareas
+               })
+          }catch(err){
+               const {data} = err.response;
+               dispatch({
+                    type: OBTENER_ERROR,
+                    payload: data.message
+               })
+          }
 
-          const newtareas = state.tareas.map(tar => {
-               if(tar._id === tarea._id){
-                    tar = tarea;
-               }
-               return tar;
-          })
-          dispatch({
-               type: EDITAR_TAREA,
-               payload: newtareas
-          })
      }
 
      const obtenerTareaEditar = (tarea) => {
@@ -87,12 +138,14 @@ const TareaState = (props) => {
                tareasproyecto: state.tareasproyecto,
                tareas: state.tareas,
                tareaedit: state.tareaedit,
+               error: state.error,
+               obtenerTodasTareas,
                obtenerTareas,
                agregarTarea,
                eliminarTarea,
                cambiarEstado,
                obtenerTareaEditar,
-               editarTarea
+               editarTarea,
           }}>
                {props.children}
           </TareaContext.Provider>
