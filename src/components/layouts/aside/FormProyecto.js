@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {CSSTransition} from 'react-transition-group'
-import ProyectoContext from '../../../context/proyectos//ProyectoContext';
+import ProyectoContext from '../../../context/proyectos/ProyectoContext';
 const Form = () => {
      const [stateform, changeStateForm] = useState(false);
      const [inProp, setInProp] = useState(false);
@@ -15,8 +15,6 @@ const Form = () => {
      useEffect(()=>{
           if(stateform){
                setInProp(true);
-          }else{
-               setInProp(false);
           }
      }, [stateform])
 

@@ -35,7 +35,6 @@ const FormTarea = () => {
                 agregarTarea(
                      {
                           ...tarea,
-                          estado: false,
                           proyectoid: proyecto._id
                      }
                 );

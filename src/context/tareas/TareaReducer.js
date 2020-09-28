@@ -16,7 +16,8 @@ export default (state, action) => {
           case AGREGAR_TAREA:
                return {
                     ...state,
-                    tareas: action.payload
+                    tareas: action.payload,
+                    error: ''
                }
           case ELIMINAR_TAREA:
                return {
@@ -33,13 +34,15 @@ export default (state, action) => {
           case OBTENER_TAREA_EDITAR:
                return {
                     ...state,
-                    tareaedit: action.payload
+                    tareaedit: action.payload,
+                    error: ''
                }
           case EDITAR_TAREA:
                return {
                     ...state,
                     tareas: action.payload,
-                    tareaedit: {}
+                    tareaedit: {},
+                    error: ''
                }
            case OBTENER_ERROR:
                 return {

@@ -1,10 +1,12 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useContext} from 'react';
 import TareaContext from './TareaContext';
 import TareaReducer from './TareaReducer';
+import AuthContext from '../auth/AuthContext';
+import establecerAxios from '../../config/authaxios';
 import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR} from  '../../types';
-import axios from 'axios';
 const TareaState = (props) => {
-
+     const {token} = useContext(AuthContext);
+     const axios = establecerAxios(token);
 
      const initialState = {
           tareas: [],
@@ -17,7 +19,7 @@ const TareaState = (props) => {
 
      const obtenerTodasTareas = async () => {
           try{
-               const {data} = await axios.get(process.env.REACT_APP_BACKEND_URL + '/tareas');
+               const {data} = await axios.get('/tareas');
                dispatch({
                     type: OBTENER_TODAS_TAREAS,
                     payload: data.body
@@ -42,7 +44,7 @@ const TareaState = (props) => {
 
      const agregarTarea = async (tarea) => {
           try{
-               const {data} = await axios.post(process.env.REACT_APP_BACKEND_URL + '/tareas', tarea);
+               const {data} = await axios.post('/tareas', tarea);
                const newtareas = [data.body, ...state.tareas];
                dispatch({
                     type: AGREGAR_TAREA,
@@ -59,7 +61,7 @@ const TareaState = (props) => {
 
      const eliminarTarea = async (id) => {
           try{
-               const {data} = await axios.delete(process.env.REACT_APP_BACKEND_URL + `/tareas/${id}`);
+               const {data} = await axios.delete(`/tareas/${id}`);
                console.log(data.message);
                const resttareas = state.tareas.filter(tarea => tarea._id !== id);
                dispatch({
@@ -80,7 +82,7 @@ const TareaState = (props) => {
      const cambiarEstado = async (id) => {
           try{
                const tarea = state.tareas.find(tarea => tarea._id === id);
-               const {data} = await axios.put(process.env.REACT_APP_BACKEND_URL + `/tareas/${id}`, {estado: !tarea.estado});
+               const {data} = await axios.put(`/tareas/${id}`, {estado: !tarea.estado});
                console.log(data.message);
                
                const newtareas = state.tareas.map(tarea => {
@@ -104,7 +106,7 @@ const TareaState = (props) => {
 
      const editarTarea = async (tarea) => {
           try{
-               const {data} = await axios.put(process.env.REACT_APP_BACKEND_URL + `/tareas/${tarea._id}`, {name: tarea.name});
+               const {data} = await axios.put(`/tareas/${tarea._id}`, {name: tarea.name});
                console.log(data.message);
                const newtareas = state.tareas.map(tar => {
                     if(tar._id === tarea._id){
@@ -132,7 +134,7 @@ const TareaState = (props) => {
                payload: tarea
           })
      }
-
+     
      return (
           <TareaContext.Provider value={{
                tareasproyecto: state.tareasproyecto,

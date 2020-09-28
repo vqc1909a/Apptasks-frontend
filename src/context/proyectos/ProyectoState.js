@@ -1,10 +1,13 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer, useState, useContext} from 'react';
 import { OBTENER_PROYECTOS, AGREGAR_PROYECTO, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR } from '../../types';
 import ProyectoContext from './ProyectoContext';
 import ProyectoReducer from './ProyectoReducer';
-import axios from 'axios';
+import AuthContext from '../auth/AuthContext';
+import establecerAxios from '../../config/authaxios';
 const ProyectoState = (props) => {
-
+     const {token} = useContext(AuthContext);
+     const axios = establecerAxios(token);
+     
      const initialState = {
           proyectos: [],
           proyecto: {},
@@ -17,7 +20,7 @@ const ProyectoState = (props) => {
      const obtenerProyectos = async () => {
           try{
                changeSpinner(true);
-               const {data} = await axios.get(process.env.REACT_APP_BACKEND_URL + '/proyectos');
+               const {data} = await axios.get('/proyectos');
                dispatch({
                     type: OBTENER_PROYECTOS,
                     payload: data.body
@@ -36,7 +39,7 @@ const ProyectoState = (props) => {
      const agregarProyecto = async(proyecto) => {
           try{
                
-               const {data} = await axios.post(process.env.REACT_APP_BACKEND_URL + '/proyectos', proyecto);
+               const {data} = await axios.post('/proyectos', proyecto);
                 const newproyectos = [...state.proyectos, data.body];
                 dispatch({
                      type: AGREGAR_PROYECTO,
@@ -59,7 +62,7 @@ const ProyectoState = (props) => {
      }
      const eliminarProyecto = async (id) => {
           try{
-               const {data} = await axios.delete(process.env.REACT_APP_BACKEND_URL + `/proyectos/${id}`);
+               const {data} = await axios.delete(`/proyectos/${id}`);
                console.log(data.message);
                const restproyects = state.proyectos.filter(proyecto => proyecto._id !== id);
                dispatch({
@@ -74,8 +77,12 @@ const ProyectoState = (props) => {
                })
 
           }
-               
-        
+     }
+     const limpiarErrorGeneral = () => {
+            dispatch({
+                 type: OBTENER_ERROR,
+                 payload: ''
+            })
      }
      return (
           <ProyectoContext.Provider
@@ -87,7 +94,8 @@ const ProyectoState = (props) => {
                obtenerProyectos,
                agregarProyecto,
                seleccionarProyecto,
-               eliminarProyecto
+               eliminarProyecto,
+               limpiarErrorGeneral
 
           }}>
                {props.children}

@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Error from '../Error';
 import {Link} from 'react-router-dom';
+import AuthContext from '../../context/auth/AuthContext';
+
 
 const Form = () => {
+    const {iniciarSesion, errorauth, ocultarError} = useContext(AuthContext);
+
      const [user, changeUser] = useState({
           email: '',
           password: '',
@@ -10,6 +14,21 @@ const Form = () => {
      });
 
      const {email, password, error} = user;
+
+     
+     useEffect(() => {
+          changeUser({
+               ...user,
+               error: errorauth
+          })
+          // eslint-disable-next-line
+     }, [errorauth]);
+
+     useEffect(() => {
+          ocultarError();
+          // eslint-disable-next-line 
+     }, [])
+     
 
      const handleUser = (e) => {
           changeUser({
@@ -20,6 +39,7 @@ const Form = () => {
 
      const handleSubmit = (e) => {
           e.preventDefault();
+          ocultarError();
           if(email.trim() === '' || password.trim() === ''){
                 changeUser({
                      ...user,
@@ -31,7 +51,20 @@ const Form = () => {
                ...user,
                error: ''
           })
+          if(password.trim().length < 8){
+               changeUser({
+                    ...user,
+                    error: 'El password debe ser como mínimo de 8 caracteres'
+               })
+               return null;
+          }
+          changeUser({
+               ...user,
+               error: ''
+          })
           //!Enviar al state
+          iniciarSesion(user);
+
      }  
 
      return (

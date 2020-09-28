@@ -1,12 +1,29 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect, useContext} from 'react';
 import Header from '../components/layouts/Header';
 import Footer from '../components/layouts/Footer';
 import Form from '../components/signin/Form';
+import AuthContext from '../context/auth/AuthContext';
 
-const Signin = () => {
+import ProyectoContext from '../context/proyectos/ProyectoContext';
+
+const Signin = (props) => {
+    const {token} = useContext(AuthContext);
+     const proyectocontext = useContext(ProyectoContext);
+
+     useEffect(() => {
+          if(token){
+               props.history.push('/proyectos');
+          }
+     }, [token, props.history]);
+
+     useEffect(()=>{
+          proyectocontext.limpiarErrorGeneral();
+          // eslint-disable-next-line
+     },[])
+
      return (
           <Fragment>
-               <Header title="Signin"></Header>
+               <Header title="Aplicación de Tareas"></Header>
                <main>
                     <section className="signin-form bg-secondary d-flex justify-content-center align-items-center">
                               <div className="col-11 col-sm-8 col-md-6">

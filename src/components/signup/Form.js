@@ -1,18 +1,34 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import Error from '../Error';
 import {Link} from 'react-router-dom';
-const Form = () => {
+import AuthContext from '../../context/auth/AuthContext';
 
+const Form = () => {
+    const {registrarse, errorauth, ocultarError} = useContext(AuthContext);
+    
     const [user, changeUser] = useState({
-          name: '',
+         name: '',
           email: '',
           password: '',
           confirm: '',
           error: ''
      });
-
+     
      const {name, email, password, confirm, error} = user;
 
+     useEffect(() => {
+          changeUser({
+               ...user,
+               error: errorauth
+          })
+          // eslint-disable-next-line
+     }, [errorauth])
+
+     useEffect(() => {
+        ocultarError();
+        // eslint-disable-next-line 
+     }, [])
+     
      const handleUser = (e) => {
           changeUser({
                ...user,
@@ -22,6 +38,7 @@ const Form = () => {
 
      const handleSubmit = (e) => {
           e.preventDefault();
+          ocultarError();
           if(name.trim() === '' || email.trim() === '' || password.trim() === '' || confirm.trim() === ''){
                changeUser({
                     ...user,
@@ -56,7 +73,7 @@ const Form = () => {
                 error: ''
            })
           //!Enviar al state
-          
+          registrarse(user)
      }  
 
      return (

@@ -2,10 +2,11 @@ import React, {Fragment} from 'react';
 import Header from '../components/layouts/Header';
 import Footer from '../components/layouts/Footer';
 import Form from '../components/signup/Form';
+
 const Signup = () => {
      return (
            <Fragment>
-               <Header title="Signup"></Header>
+               <Header title="Aplicación de Tareas"></Header>
                <main>
                <section className="signup-form bg-secondary d-flex justify-content-center align-items-center">
                               <div className="col-11 col-sm-8 col-md-6">
