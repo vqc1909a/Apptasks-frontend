@@ -2,20 +2,11 @@ import React, {Fragment, useEffect, useContext} from 'react';
 import Header from '../components/layouts/Header';
 import Footer from '../components/layouts/Footer';
 import Form from '../components/signin/Form';
-import AuthContext from '../context/auth/AuthContext';
 
 import ProyectoContext from '../context/proyectos/ProyectoContext';
 
-const Signin = (props) => {
-    const {token} = useContext(AuthContext);
+const Signin = () => {
      const proyectocontext = useContext(ProyectoContext);
-
-     useEffect(() => {
-          if(token){
-               props.history.push('/proyectos');
-          }
-     }, [token, props.history]);
-
      useEffect(()=>{
           proyectocontext.limpiarErrorGeneral();
           // eslint-disable-next-line

@@ -3,7 +3,7 @@ import TareaContext from './TareaContext';
 import TareaReducer from './TareaReducer';
 import AuthContext from '../auth/AuthContext';
 import establecerAxios from '../../config/authaxios';
-import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR} from  '../../types';
+import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR, LIMPIAR_ESTADOS} from  '../../types';
 const TareaState = (props) => {
      const {token} = useContext(AuthContext);
      const axios = establecerAxios(token);
@@ -134,6 +134,12 @@ const TareaState = (props) => {
                payload: tarea
           })
      }
+
+     const limpiarEstados = () => {
+          dispatch({
+               type: LIMPIAR_ESTADOS,
+          })
+     }
      
      return (
           <TareaContext.Provider value={{
@@ -148,6 +154,7 @@ const TareaState = (props) => {
                cambiarEstado,
                obtenerTareaEditar,
                editarTarea,
+               limpiarEstados
           }}>
                {props.children}
           </TareaContext.Provider>

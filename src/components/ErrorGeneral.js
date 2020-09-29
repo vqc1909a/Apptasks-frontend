@@ -6,8 +6,8 @@ const ErrorGeneral = () => {
      if(proyectocontext.error === '') return null;
 
      return (
-          <div className="error-general">
-               <p>{proyectocontext.error}</p>
+          <div className="">
+               {/* <p>{proyectocontext.error}</p> */}
           </div>
      );
 }

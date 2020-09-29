@@ -1,5 +1,5 @@
 import React, {useReducer, useState, useContext} from 'react';
-import { OBTENER_PROYECTOS, AGREGAR_PROYECTO, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR } from '../../types';
+import { OBTENER_PROYECTOS, AGREGAR_PROYECTO, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR, LIMPIAR_ESTADOS } from '../../types';
 import ProyectoContext from './ProyectoContext';
 import ProyectoReducer from './ProyectoReducer';
 import AuthContext from '../auth/AuthContext';
@@ -84,6 +84,11 @@ const ProyectoState = (props) => {
                  payload: ''
             })
      }
+     const limpiarEstados = () => {
+          dispatch({
+               type: LIMPIAR_ESTADOS
+          })
+     }
      return (
           <ProyectoContext.Provider
           value={{
@@ -95,7 +100,8 @@ const ProyectoState = (props) => {
                agregarProyecto,
                seleccionarProyecto,
                eliminarProyecto,
-               limpiarErrorGeneral
+               limpiarErrorGeneral,
+               limpiarEstados
 
           }}>
                {props.children}

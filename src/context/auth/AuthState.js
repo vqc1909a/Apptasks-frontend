@@ -47,6 +47,7 @@ const AuthState = (props) => {
           }
      }
      const cerrarSesion = () => {
+
           dispatch({
                type: CERRAR_SESION
           })

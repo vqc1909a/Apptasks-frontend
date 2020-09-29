@@ -1,4 +1,4 @@
-import {AGREGAR_PROYECTO, OBTENER_PROYECTOS, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR} from '../../types';
+import {AGREGAR_PROYECTO, OBTENER_PROYECTOS, SELECCIONAR_PROYECTO, ELIMINAR_PROYECTO, OBTENER_ERROR, LIMPIAR_ESTADOS} from '../../types';
 export default (state, action) => {
      switch(action.type){
           case OBTENER_PROYECTOS:
@@ -29,6 +29,12 @@ export default (state, action) => {
                return {
                     ...state,
                     error: action.payload
+               }
+          case LIMPIAR_ESTADOS:
+               return {
+                    proyectos: [],
+                    proyecto: {},
+                    error: ''
                }
           default:
                return state;

@@ -15,9 +15,8 @@ const Proyects = (props) => {
           obtenerUsuario();
           // eslint-disable-next-line
      },[])
-
      useEffect(()=>{
-          if(proyectocontext.error === 'Token inválido' || proyectocontext.error === 'Acceso denegado'){
+          if(proyectocontext.error === 'Tiempo de sesión terminado' || proyectocontext.error === 'Acceso denegado'){
                cerrarSesion();
           }
           // eslint-disable-next-line

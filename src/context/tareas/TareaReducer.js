@@ -1,4 +1,4 @@
-import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR} from '../../types';
+import {OBTENER_TAREAS, AGREGAR_TAREA, ELIMINAR_TAREA, CAMBIAR_ESTADO, OBTENER_TAREA_EDITAR, EDITAR_TAREA, OBTENER_TODAS_TAREAS, OBTENER_ERROR, LIMPIAR_ESTADOS} from '../../types';
 export default (state, action) => {
      switch(action.type){
           case OBTENER_TODAS_TAREAS:
@@ -48,6 +48,13 @@ export default (state, action) => {
                 return {
                      ...state,
                      error: action.payload
+                }
+           case LIMPIAR_ESTADOS:
+                return {
+                     tareas: [],
+                     tareasproyecto: [],
+                     tareaedit: {},
+                     error: ''
                 }
           default:
                return state;

@@ -20,7 +20,7 @@ export default (state, action) => {
                     errorauth: ''
                }
           case CERRAR_SESION: 
-          localStorage.removeItem('token');
+                localStorage.removeItem('token');
                return {
                     ...state,
                     token: '',
